@@ -9,6 +9,7 @@
     - zlib-devel
     - libffi-devel
     - git
+    - acl
   become: true
   tags:
     - rbenv

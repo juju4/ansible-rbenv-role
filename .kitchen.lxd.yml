@@ -20,6 +20,12 @@ provisioner:
   enable_yum_epel: true
   ansible_connection: ssh
   become: true
+  extra_vars:
+    rbenv:
+      env: system
+      version: v0.4.0
+      ruby_version: 2.1.2
+
 
 platforms:
   - name: ubuntu-16.04
@@ -36,14 +42,4 @@ suites:
 #    provisioner:
 #      name: ansible_playbook
 #      playbook: test/integration/site.yml
-  - name: user
-    run_list:
-    includes:
-      - ubuntu-16.04
-      - ubuntu-14.04
-#      - centos-7
-#      - centos-6
-    provisioner:
-      name: ansible_playbook
-      playbook: test/integration/user/default.yml
 
