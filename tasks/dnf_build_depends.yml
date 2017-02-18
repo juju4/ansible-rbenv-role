@@ -1,6 +1,6 @@
 ---
 - name: install build depends
-  yum: name={{ item }} state=present
+  dnf: name={{ item }} state=present
   with_items:
     - gcc
     - openssl-devel
@@ -9,6 +9,4 @@
     - zlib-devel
     - libffi-devel
     - git
-    - acl
   become: true
-

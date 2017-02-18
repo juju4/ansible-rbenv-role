@@ -21,7 +21,9 @@ Default variables are:
     rbenv:
       env: system
       version: v1.0.0
-      ruby_version: 2.3.1
+      default_ruby: 2.3.3
+      rubies:
+        - version: 2.3.3
 
     rbenv_repo: "https://github.com/rbenv/rbenv.git"
 
@@ -32,7 +34,7 @@ Default variables are:
 
       - { name: "ruby-build",
           repo: "https://github.com/rbenv/ruby-build.git",
-          version: "v20160426" }
+          version: "master" }
 
       - { name: "rbenv-default-gems",
           repo: "https://github.com/rbenv/rbenv-default-gems.git",
@@ -67,7 +69,8 @@ Description:
 
 - ` rbenv.env ` - Type of rbenv installation. Allows 'system' or 'user' values
 - ` rbenv.version ` - Version of rbenv to install (tag from [rbenv releases page](https://github.com/sstephenson/rbenv/releases))
-- ` rbenv.ruby_version ` - Version of ruby to install as global rbenv ruby
+- ` rbenv.default_ruby ` - Which ruby version to be set as global rbenv ruby.
+- ` rbenv.rubies ` - Versions of ruby to install. This is an array of hashes. E.g. `[ { version: 2.3.3, env: { RUBY_CONFIGURE_OPTS="--enable-shared" } } ]`
 - ` rbenv_repo ` - Repository with source code of rbenv to install
 - ` rbenv_plugins ` - Array of Hashes with information about plugins to install
 - ` rbenv_root ` - Install path
@@ -75,6 +78,7 @@ Description:
 - ` default_gems_file ` - This is Rbenv's plugin _rbenv-default-gems_. Sets the path to a default-gems file of your choice (_don't set it_ if you want to use the default file `files/default-gems`)
 - ` rbenv_owner ` - The user  owning `rbenv_root` when `rbenv.env` is `system`
 - ` rbenv_group ` - The group owning `rbenv_root` when `rbenv.env` is `system`
+- ` rbenv_tmpdir ` - A temporary directory path used for artifacts when installing rubies. Defaults to system's `$TMPDIR`
 
 Example:
 
@@ -84,7 +88,12 @@ Example:
         rbenv:
           env: user
           version: v0.4.0
-          ruby_version: 2.0.0-p353
+          default_ruby: 2.0.0-p353
+          rubies:
+          - version: 2.0.0-p353
+          - version: 2.2.4
+            env:
+              RUBY_CONFIGURE_OPTS: "--enable-shared"
       roles:
         - role: zzet.rbenv
           rbenv_users:
@@ -104,5 +113,3 @@ Author Information
 ------------------
 
 [Andrew Kumanyaev](http://github.com/zzet)
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zzet/ansible-rbenv-role/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
